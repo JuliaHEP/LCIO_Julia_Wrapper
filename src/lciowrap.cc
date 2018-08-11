@@ -81,8 +81,8 @@ namespace jlcxx
 }
 
 
-JULIA_CPP_MODULE_BEGIN(registry)
-    jlcxx::Module& lciowrap = registry.create_module("LCIO");
+JLCXX_MODULE define_julia_module(jlcxx::Module& lciowrap)
+{
     lciowrap.add_type<LCObject>("LCObject");
     lciowrap.add_type<vector<string>>("StringVec")
         .method("size", &StringVec::size);
@@ -342,4 +342,4 @@ JULIA_CPP_MODULE_BEGIN(registry)
         typedef typename decltype(wrapped)::type LCType;
         wrapped.method("cast", &LCType::cast);
     });
-JULIA_CPP_MODULE_END
+}
