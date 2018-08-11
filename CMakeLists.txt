@@ -17,9 +17,8 @@ set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib;${LCIO_LIBRARY_DIRS};${Juli
 include_directories(${CMAKE_SOURCE_DIR}/include)
 include_directories(${INTERFACE_INCLUDE_DIRECTORIES})
 include_directories(${LCIO_INCLUDE_DIRS})
-# include_directories(${Julia_INCLUDE_DIRS})
 
-add_library(lciowrap SHARED lciowrap.cc )
+add_library(lciowrap SHARED src/lciowrap.cc )
 target_link_libraries(lciowrap ${LCIO_LCIO_LIBRARY} ${LCIO_SIO_LIBRARY} JlCxx::cxxwrap_julia)
 
 install(TARGETS
