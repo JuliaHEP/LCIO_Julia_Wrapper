@@ -27,7 +27,9 @@ deploy:
   provider: releases
   api_key:
     secure: eg3KzKKcCcX6SuK3zzbcKRt9Otiaw5kfGT9/mLN2yfQ3vkgXwy1DCyCcGqX43C85IZNlbKIY7dryLWV29ePG1eZmUV0FSOA5GjQvX2GX6rnnOjUngIplwCi9OLVUQ72dmid0JjIm1PeQbn2UKzaUVG01V3UgFdJoirXPfG72zjSYdL/1hiGScyRMhU0cVbRH6w/o3BGIHaqpI9lXHCOoTYFF+B6WJU8ip3QVHtwd1uc5I2xwIA2U3LuOPsVhh5pwMT1V90WdRfgXqVghSH+8wXTZEo3BKEv/D8th/i2KTuZ7uS4//e/m0Z2rre5E6QXw8RK8xDogCX5pzT7H9mk539UF82MKDOr7W70piNgwUcMIsnnkOh2S7W7K/07Lf480AboFqJCvMdxCCQ5uyflLXDoAMovHP6GIWjb2rj5TC/QuKyBhvl8JB4enkS9chdKfRaM9WUsAA9+lwevOMKG15hH9dBUEuxpAais+fAxXfOswUuKr37StW54n6VvxMbjhT6icPZYCV1BUFato3hNJIWc5SapjhO2JHOuCCPesQKaNc0ShEz+9DQPlZeimhJuySwf8RwTxgDBvBWfLhbpsVuZIe5CZnRu11147xPkdlnILV60JvPeHNpkmLeaH+QNb5vkMlHhh8fIxpGWYt4Wx4vVWXoZxtFdl3RwicSyvq+U=
-  file: products/lib
+  file_glob: true
+  file: products/*
+  skip_cleanup: true
   on:
     tag: true
     repo: jstrube/LCIOWrapBuilder
