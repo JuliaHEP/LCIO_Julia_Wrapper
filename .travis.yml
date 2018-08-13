@@ -17,10 +17,11 @@ env:
     - BINARYBUILDER_AUTOMATIC_APPLE=true
 sudo: required
 before_script:
+  - cd ../..
   - julia -e 'Pkg.add("BinaryProvider")'
   - julia -e 'Pkg.clone("https://github.com/JuliaPackaging/BinaryBuilder.jl"); Pkg.build()'
 script:
-  - julia --color=yes .ci/build_tarballs.jl
+  - julia --color=yes jstrube/LCIOWrapBuilder/.ci/build_tarballs.jl
 deploy:
   provider: releases
   api_key:
@@ -29,5 +30,5 @@ deploy:
   file: products/*
   skip_cleanup: true
   on:
-    tag: true
     repo: jstrube/LCIOWrapBuilder
+    tag: true
