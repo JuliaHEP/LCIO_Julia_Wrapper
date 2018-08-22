@@ -30,12 +30,12 @@ platforms = [
 
 # The products that we will ensure are always built
 products(prefix) = [
-    LibraryProduct(prefix, "liblciowrap", :l_lciowrap)
+    LibraryProduct(prefix, "liblciowrap", :lciowrap)
 ]
 
 # Dependencies that must be installed before this package can be built
 dependencies = [
-    "https://github.com/JuliaInterop/libcxxwrap-julia/releases/download/v0.3.2/build_libcxxwrap-julia-1.0.v0.3.2.jl"
+	"https://github.com/JuliaInterop/libcxxwrap-julia/releases/download/v0.4.0/build_libcxxwrap-julia-1.0.v0.4.0.jl"
     "https://github.com/jstrube/LCIOBuilder/releases/download/v2.00.01/build_LCIOBuilder.v2.12.1.jl"
 ]
 
