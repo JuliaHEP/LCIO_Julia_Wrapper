@@ -31,4 +31,4 @@ deploy:
   skip_cleanup: true
   on:
     repo: jstrube/LCIOWrapBuilder
-    tag: true
+    tags: true
