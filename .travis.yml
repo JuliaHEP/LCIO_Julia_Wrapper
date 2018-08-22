@@ -18,7 +18,7 @@ env:
 sudo: required
 before_script:
   - cd ../..
-  - julia -e 'Pkg.add("BinaryProvider")'
+  - julia -e 'Pkg.add("BinaryProvider"); Pkg.checkout("BinaryProvider")'
   - julia -e 'Pkg.clone("https://github.com/JuliaPackaging/BinaryBuilder.jl"); Pkg.build()'
 script:
   - julia --color=yes jstrube/LCIOWrapBuilder/.ci/build_tarballs.jl
