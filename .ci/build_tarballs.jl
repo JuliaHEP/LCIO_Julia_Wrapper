@@ -25,7 +25,8 @@ end
 # These are the platforms we will build for by default, unless further
 # platforms are passed in on the command line
 platforms = [
-    Linux(:x86_64)
+    Linux(:x86_64),
+    MacOS(:x86_64)
 ]
 
 # The products that we will ensure are always built
@@ -36,7 +37,7 @@ products(prefix) = [
 # Dependencies that must be installed before this package can be built
 dependencies = [
 	"https://github.com/JuliaInterop/libcxxwrap-julia/releases/download/v0.4.0/build_libcxxwrap-julia-1.0.v0.4.0.jl"
-    "https://github.com/jstrube/LCIOBuilder/releases/download/v2.00.01/build_LCIOBuilder.v2.12.1.jl"
+	"https://github.com/jstrube/LCIOBuilder/releases/download/v2.12.1/build_LCIOBuilder.v2.12.1.jl"
 ]
 
 # Build the tarballs, and possibly a `build.jl` as well.
