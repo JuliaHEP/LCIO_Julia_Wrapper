@@ -22,19 +22,12 @@ end
 
 # These are the platforms we will build for by default, unless further
 # platforms are passed in on the command line
-# These are the platforms we will build for by default, unless further
-# platforms are passed in on the command line
-platforms = Platform[]
-_abis(p) = (:gcc7,:gcc8)
-_archs(p) = (:x86_64,)
-for p in (Linux,)
-    for a in _archs(p)
-        for abi in _abis(p)
-            push!(platforms, p(a, compiler_abi=CompilerABI(abi,:cxx11)))
-        end
-    end
-end
-push!(platforms, MacOS(:x86_64))
+platforms = Platform[
+    Linux(:x86_64, libc=:glibc, compiler_abi=CompilerABI(:gcc7)),
+    Linux(:x86_64, libc=:glibc, compiler_abi=CompilerABI(:gcc8)),
+    MacOS(:x86_64, compiler_abi=CompilerABI(:gcc7)),
+    MacOS(:x86_64, compiler_abi=CompilerABI(:gcc8)),
+]
 
 # The products that we will ensure are always built
 products(prefix) = [
@@ -44,7 +37,7 @@ products(prefix) = [
 # Dependencies that must be installed before this package can be built
 dependencies = [
 	"https://github.com/JuliaInterop/libcxxwrap-julia/releases/download/v0.5.0/build_libcxxwrap-julia-1.0.v0.5.0.jl"
-	"https://github.com/jstrube/LCIOBuilder/releases/download/v2.12.1/build_LCIOBuilder.v2.12.1.jl"
+	"https://github.com/jstrube/LCIOBuilder/releases/download/v2.12.2/build_LCIOBuilder.v2.12.1.jl"
 	"https://github.com/JuliaPackaging/JuliaBuilder/releases/download/v1.0.0-2/build_Julia.v1.0.0.jl"
 ]
 
