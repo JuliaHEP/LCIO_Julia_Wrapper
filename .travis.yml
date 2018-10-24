@@ -18,7 +18,7 @@ env:
 sudo: required
 before_script:
 - cd ../..
-- julia -e 'using Pkg; Pkg.add(PackageSpec(name="BinaryProvider", rev="master"))'
+- julia -e 'using Pkg; Pkg.add(PackageSpec(name="BinaryProvider"))'
 - julia -e 'using Pkg; Pkg.add(PackageSpec(name="BinaryBuilder", rev="master"))'
 script:
 - julia --color=yes jstrube/LCIOWrapBuilder/.ci/build_tarballs.jl
