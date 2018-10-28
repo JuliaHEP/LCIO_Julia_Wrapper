@@ -4,8 +4,8 @@ using BinaryBuilder
 
 # Collection of sources required to build LCIOWrapBuilder
 sources = [
-    "https://github.com/jstrube/LCIOWrapBuilder.git" =>
-    "451f42e9b3daf41156db502ee45ee8884b77efd2",
+#    "https://github.com/jstrube/LCIOWrapBuilder.git" => "451f42e9b3daf41156db502ee45ee8884b77efd2",
+    "src"
 ]
 
 # Bash recipe for building across all platforms
@@ -14,7 +14,7 @@ function getscript(version)
 	return """
 	cd \$WORKSPACE/srcdir
 	mkdir build && cd build
-	cmake -DCMAKE_INSTALL_PREFIX=\$prefix -DCMAKE_TOOLCHAIN_FILE=/opt/\$target/\$target.toolchain -DCMAKE_FIND_ROOT_PATH=\$prefix -DJulia_PREFIX=\$prefix ../LCIOWrapBuilder/
+	cmake -DCMAKE_INSTALL_PREFIX=\$prefix -DCMAKE_TOOLCHAIN_FILE=/opt/\$target/\$target.toolchain -DCMAKE_FIND_ROOT_PATH=\$prefix -DJulia_PREFIX=\$prefix ../
 	VERBOSE=ON cmake --build . --config Release --target install
 	"""
 end
@@ -36,8 +36,8 @@ products(prefix) = [
 # Dependencies that must be installed before this package can be built
 dependencies = [
 	"https://github.com/JuliaInterop/libcxxwrap-julia/releases/download/v0.5.1/build_libcxxwrap-julia-1.0.v0.5.1.jl"
-	"https://github.com/jstrube/LCIOBuilder/releases/download/v2.12.1-2/build_LCIOBuilder.v2.12.1.jl"
 	"https://github.com/JuliaPackaging/JuliaBuilder/releases/download/v1.0.0-2/build_Julia.v1.0.0.jl"
+	"https://github.com/jstrube/LCIOBuilder/releases/download/v2.12.1-4/build_LCIOBuilder.v2.12.1-4.jl"
 ]
 
 # Build the tarballs, and possibly a `build.jl` as well.
