@@ -4,8 +4,7 @@ using BinaryBuilder
 
 # Collection of sources required to build LCIOWrapBuilder
 sources = [
-#    "https://github.com/jstrube/LCIOWrapBuilder.git" => "451f42e9b3daf41156db502ee45ee8884b77efd2",
-    "jstrube/LCIOWrapBuilder/"
+    "LCIOWrapBuilder"
 ]
 
 # Bash recipe for building across all platforms
@@ -14,7 +13,7 @@ function getscript(version)
 	return """
 	cd \$WORKSPACE/srcdir
 	mkdir build && cd build
-	cmake -DCMAKE_INSTALL_PREFIX=\$prefix -DCMAKE_TOOLCHAIN_FILE=/opt/\$target/\$target.toolchain -DCMAKE_FIND_ROOT_PATH=\$prefix -DJulia_PREFIX=\$prefix ../LCIOWrapBuilder
+	cmake -DCMAKE_INSTALL_PREFIX=\$prefix -DCMAKE_TOOLCHAIN_FILE=/opt/\$target/\$target.toolchain -DCMAKE_FIND_ROOT_PATH=\$prefix -DJulia_PREFIX=\$prefix ..
 	VERBOSE=ON cmake --build . --config Release --target install
 	"""
 end

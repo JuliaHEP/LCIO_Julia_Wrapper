@@ -17,11 +17,11 @@ env:
   - BINARYBUILDER_AUTOMATIC_APPLE=true
 sudo: required
 before_script:
-- cd ../..
+- cd ..
 - julia -e 'using Pkg; Pkg.add(PackageSpec(name="BinaryProvider"))'
 - julia -e 'using Pkg; Pkg.add(PackageSpec(name="BinaryBuilder", rev="master"))'
 script:
-- julia --color=yes jstrube/LCIOWrapBuilder/.ci/build_tarballs.jl
+- julia --color=yes LCIOWrapBuilder/.ci/build_tarballs.jl
 - ls -l products/*
 deploy:
   provider: releases
