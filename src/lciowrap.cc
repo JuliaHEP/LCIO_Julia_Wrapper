@@ -84,26 +84,26 @@ namespace jlcxx
 JLCXX_MODULE define_julia_module(jlcxx::Module& lciowrap)
 {
     lciowrap.add_type<LCObject>("LCObject");
-    lciowrap.add_type<vector<string>>("StringVec")
-        .method("size", &StringVec::size);
-    lciowrap.method("at", [](const vector<string>* vec, size_t i) {
-        return vec->at(i);
-    });
-    lciowrap.add_type<vector<float>>("FloatVec")
-        .method("size", &FloatVec::size);
-    lciowrap.method("at", [](const vector<float>* vec, size_t i) {
-        return vec->at(i);
-    });
-    lciowrap.add_type<vector<int>>("IntVec")
-        .method("size", &IntVec::size);
-    lciowrap.method("at", [](const vector<int>* vec, size_t i) {
-        return vec->at(i);
-    });
-    lciowrap.add_type<vector<short>>("ShortVec")
-        .method("size", &ShortVec::size);
-    lciowrap.method("at", [](const vector<short>* vec, size_t i) {
-        return vec->at(i);
-    });
+    //lciowrap.add_type<vector<string>>("StringVec")
+    //    .method("size", &StringVec::size); 
+    // lciowrap.method("at", [](const vector<string>* vec, size_t i) {
+    //     return vec->at(i);
+    // });
+    // lciowrap.add_type<vector<float>>("FloatVec")
+    //     .method("size", &FloatVec::size);
+    // lciowrap.method("at", [](const vector<float>* vec, size_t i) {
+    //     return vec->at(i);
+    // });
+    // lciowrap.add_type<vector<int>>("IntVec")
+    //     .method("size", &IntVec::size);
+    // lciowrap.method("at", [](const vector<int>* vec, size_t i) {
+    //     return vec->at(i);
+    // });
+    // lciowrap.add_type<vector<short>>("ShortVec")
+    //     .method("size", &ShortVec::size);
+    // lciowrap.method("at", [](const vector<short>* vec, size_t i) {
+    //     return vec->at(i);
+    // }); // These are in CxxWrap now, without at but having [] operators
 
     lciowrap.add_type<LCParameters>("LCParameters")
         .method("getIntVal", &LCParameters::getIntVal)
@@ -168,6 +168,18 @@ JLCXX_MODULE define_julia_module(jlcxx::Module& lciowrap)
         return vec.at(i);
     });
 
+    lciowrap.add_type<LCEvent>("LCEvent")
+        .method("getEventCollection", &LCEvent::getCollection)
+        .method("getCollectionNames", &LCEvent::getCollectionNames)
+        .method("getDetectorName", &LCEvent::getDetectorName)
+        .method("getEventNumber", &LCEvent::getEventNumber)
+        .method("getRunNumber", &LCEvent::getRunNumber)
+        .method("getParameters", &LCEvent::getParameters)
+        .method("getWeight", &LCEvent::getWeight);
+
+    lciowrap.add_type<LCEventImpl>("LCEventImpl", jlcxx::julia_type<LCEvent>())
+        .method("setEventNumber", &LCEventImpl::setEventNumber);
+
     #include "MCParticle.icc"
     #include "CalorimeterHitTypes.icc"
     #include "TrackerHitTypes.icc"
@@ -210,17 +222,6 @@ JLCXX_MODULE define_julia_module(jlcxx::Module& lciowrap)
 
     #include "ReconstructedParticle.icc"
 
-    lciowrap.add_type<LCEvent>("LCEvent")
-        .method("getEventCollection", &LCEvent::getCollection)
-        .method("getCollectionNames", &LCEvent::getCollectionNames)
-        .method("getDetectorName", &LCEvent::getDetectorName)
-        .method("getEventNumber", &LCEvent::getEventNumber)
-        .method("getRunNumber", &LCEvent::getRunNumber)
-        .method("getParameters", &LCEvent::getParameters)
-        .method("getWeight", &LCEvent::getWeight);
-
-    lciowrap.add_type<LCEventImpl>("LCEventImpl", jlcxx::julia_type<LCEvent>())
-        .method("setEventNumber", &LCEventImpl::setEventNumber);
     lciowrap.method("addCollection", [](LCEventImpl* event, LCCollectionVec* col, const std::string& name) {
         event->addCollection(col, name);
         // TODO this is necessary for the time being, otherwise the event tries to delete the collection, but the julia finalizers also try to kill the collection
