@@ -97,14 +97,14 @@ JLCXX_MODULE define_julia_module(jlcxx::Module& lciowrap)
         .method("getNInt", &LCParameters::getNInt)
         .method("getNFloat", &LCParameters::getNFloat)
         .method("getNString", &LCParameters::getNString);
-    lciowrap.method("setValue", [](LCParameters* parms, const std::string& key, int value) {
-        return parms->setValue(key, value);
+    lciowrap.method("setValue", [](LCParameters& parms, const std::string& key, int value) {
+        return parms.setValue(key, value);
     });
-    lciowrap.method("setValue", [](LCParameters* parms, const std::string& key, float value) {
-        return parms->setValue(key, value);
+    lciowrap.method("setValue", [](LCParameters& parms, const std::string& key, float value) {
+        return parms.setValue(key, value);
     });
-    lciowrap.method("setValue", [](LCParameters* parms, const std::string& key, const std::string& value) {
-        return parms->setValue(key, value);
+    lciowrap.method("setValue", [](LCParameters& parms, const std::string& key, const std::string& value) {
+        return parms.setValue(key, value);
     });
     // most of the functionality is forwarded to the TypedCollection
     lciowrap.add_type<LCCollection>("LCCollection")
@@ -151,13 +151,13 @@ JLCXX_MODULE define_julia_module(jlcxx::Module& lciowrap)
     lciowrap.add_type<LCEventImpl>("LCEventImpl", jlcxx::julia_type<LCEvent>())
         .method("setEventNumber", &LCEventImpl::setEventNumber);
     
-    lciowrap.method("addCollection", [](LCEventImpl* event, LCCollectionVec* col, const std::string& name) {
-        event->addCollection(col, name);
+    lciowrap.method("addCollection", [](LCEventImpl& event, LCCollectionVec& col, const std::string& name) {
+        event.addCollection(&col, name);
         // TODO this is necessary for the time being, otherwise the event tries to delete the collection, but the julia finalizers also try to kill the collection
         // the event tries to make the collection non-transient after takeCollection, but we may still want to write it out, so keep the state
-        bool isTransient = col->isTransient();
-        event->takeCollection(name);
-        col->setTransient(isTransient);
+        bool isTransient = col.isTransient();
+        event.takeCollection(name);
+        col.setTransient(isTransient);
     });
     #include "MCParticle.icc"
     #include "CalorimeterHitTypes.icc"
@@ -226,12 +226,17 @@ JLCXX_MODULE define_julia_module(jlcxx::Module& lciowrap)
     lciowrap.add_type<IO::LCWriter>("LCWriter")
         .method("setCompressionLevel", &IO::LCWriter::setCompressionLevel)
         .method("close", &IO::LCWriter::close)
-        .method("flush", &IO::LCWriter::flush)
-        .method("writeRunHeader", &IO::LCWriter::writeRunHeader)
-        .method("writeEvent", &IO::LCWriter::writeEvent);
+        .method("flush", &IO::LCWriter::flush);
+    lciowrap.method("writeRunHeader", [](IO::LCWriter* writer, const EVENT::LCRunHeader& hdr) {
+        writer->writeRunHeader(&hdr);
+    });
     lciowrap.method("open", [](IO::LCWriter* writer, const std::string& filename, int writeMode) {
         writer->open(filename, writeMode);
     });
+    lciowrap.method("writeEvent", [](IO::LCWriter* writer, const EVENT::LCEvent& evt) {
+        writer->writeEvent(&evt);
+    });
+
     lciowrap.method("createLCWriter", [](){
         return IOIMPL::LCFactory::getInstance()->createLCWriter();
     });

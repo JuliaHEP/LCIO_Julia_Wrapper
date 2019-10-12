@@ -84,13 +84,13 @@ lciowrap.add_type<IMPL::MCParticleImpl>("MCParticleImpl", jlcxx::julia_type<MCPa
     .method("setMass", &IMPL::MCParticleImpl::setMass)
     .method("setPDG", &IMPL::MCParticleImpl::setPDG)
     .method("setCharge", &IMPL::MCParticleImpl::setCharge);
-lciowrap.method("setMomentum", [](IMPL::MCParticleImpl* mcp, const ArrayRef<double> p3) {
+lciowrap.method("setMomentum", [](IMPL::MCParticleImpl& mcp, const ArrayRef<double> p3) {
     double mom[] = {p3[0], p3[1], p3[2]};
-    mcp->setMomentum(mom);
+    mcp.setMomentum(mom);
 });
 
-lciowrap.method("addElement", [](IMPL::LCCollectionVec* coll, IMPL::MCParticleImpl* mcp) {
+lciowrap.method("addElement", [](IMPL::LCCollectionVec& coll, IMPL::MCParticleImpl& mcp) {
     // TODO: For the time being we have to copy things that go into the
     // collection, because it owns it and wants to kill its members
-    coll->addElement(new MCParticleImpl(*mcp));
+    coll.addElement(new MCParticleImpl(mcp));
 });
