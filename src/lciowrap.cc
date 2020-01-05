@@ -70,6 +70,7 @@ struct CastOperator
     }
 };
 
+
 namespace jlcxx
 {
     template<> struct SuperType<LCEventImpl> { typedef LCEvent type; };
@@ -113,7 +114,7 @@ JLCXX_MODULE define_julia_module(jlcxx::Module& lciowrap)
         .method("getTypeName", &LCCollection::getTypeName)
         .method("getParameters", &LCCollection::getParameters);
 
-    lciowrap.add_type<LCCollectionVec>("LCCollectionVec", jlcxx::julia_type<LCCollection>())
+    lciowrap.add_type<LCCollectionVec>("LCCollectionVec", jlcxx::julia_base_type<LCCollection>())
         .constructor<const string&>()
         .method("setTransient", &LCCollectionVec::setTransient);
 
@@ -123,7 +124,7 @@ JLCXX_MODULE define_julia_module(jlcxx::Module& lciowrap)
         .method("getDescription", &LCRunHeader::getDescription)
         .method("getParameters", &LCRunHeader::getParameters);
 
-    lciowrap.add_type<LCRunHeaderImpl>("LCRunHeaderImpl", jlcxx::julia_type<LCRunHeader>())
+    lciowrap.add_type<LCRunHeaderImpl>("LCRunHeaderImpl", jlcxx::julia_base_type<LCRunHeader>())
         .method("setRunNumber", &LCRunHeaderImpl::setRunNumber)
         .method("setDetectorName", &LCRunHeaderImpl::setDetectorName)
         .method("setDescription", &LCRunHeaderImpl::setDescription)
@@ -148,7 +149,7 @@ JLCXX_MODULE define_julia_module(jlcxx::Module& lciowrap)
         .method("getParameters", &LCEvent::getParameters)
         .method("getWeight", &LCEvent::getWeight);
 
-    lciowrap.add_type<LCEventImpl>("LCEventImpl", jlcxx::julia_type<LCEvent>())
+    lciowrap.add_type<LCEventImpl>("LCEventImpl", jlcxx::julia_base_type<LCEvent>())
         .method("setEventNumber", &LCEventImpl::setEventNumber);
     
     lciowrap.method("addCollection", [](LCEventImpl& event, LCCollectionVec& col, const std::string& name) {
@@ -276,13 +277,14 @@ JLCXX_MODULE define_julia_module(jlcxx::Module& lciowrap)
         .method("highWord", &UTIL::BitField64::highWord)
         .method("fieldDescription", &UTIL::BitField64::fieldDescription)
         .method("valueString", &UTIL::BitField64::valueString);
+    lciowrap.set_override_module(jl_base_module);
     lciowrap.method("getindex", [](const UTIL::BitField64& b, const string s)->long long {
         return b[s].value();
     });
     lciowrap.method("getindex", [](const UTIL::BitField64& b, size_t index)->long long {
         return b[index].value();
     });
-
+    lciowrap.unset_override_module();
     lciowrap.add_type<Parametric<TypeVar<1>>>("CellIDDecoder")
         .apply<UTIL::CellIDDecoder<SimCalorimeterHit>
              , UTIL::CellIDDecoder<RawCalorimeterHit>

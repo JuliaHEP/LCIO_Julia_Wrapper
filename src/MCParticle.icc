@@ -79,7 +79,7 @@ lciowrap.add_type<UTIL::LCStdHepRdr>("_LCStdHepRdrCpp")
     .method("updateNextEvent", &UTIL::LCStdHepRdr::updateNextEvent);
 
     
-lciowrap.add_type<IMPL::MCParticleImpl>("MCParticleImpl", jlcxx::julia_type<MCParticle>())
+lciowrap.add_type<IMPL::MCParticleImpl>("MCParticleImpl", jlcxx::julia_base_type<MCParticle>())
     .method("setGeneratorStatus", &IMPL::MCParticleImpl::setGeneratorStatus)
     .method("setMass", &IMPL::MCParticleImpl::setMass)
     .method("setPDG", &IMPL::MCParticleImpl::setPDG)
