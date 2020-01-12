@@ -25,3 +25,21 @@ Code to wrap LCIO in Julia
     export JlCxx_DIR=$(pwd) # for CMake
     cd ../..
     ```
+- Check out this package and build
+    ```
+    cd LCIOWrapBuilder
+    mkdir build && cd build
+    cmake ..
+    make -j4
+    export LCIOJL_DIR=$(pwd)
+    ```
+- start julia
+    ```
+    ]
+    add CxxWrap#master
+    build CxxWrap
+    add LCIO#master
+    build LCIO
+    test CxxWrap
+    test LCIO
+    ```
