@@ -8,8 +8,8 @@ sources = [
 ]
 
 name = "LCIOWrapBuilder"
-version = VersionNumber(get(ENV, "TRAVIS_TAG", "0.99"))
-
+println(get(ENV, "TRAVIS_TAG")
+version = VersionNumber(get(ENV, "TRAVIS_TAG", v"0.99"))
 # Bash recipe for building across all platforms
 script = raw"""
 	wget https://github.com/Gnimuc/JuliaBuilder/releases/download/v1.3.0/julia-1.3.0-${target}.tar.gz
