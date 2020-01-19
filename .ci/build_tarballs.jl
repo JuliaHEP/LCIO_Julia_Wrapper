@@ -8,7 +8,12 @@ sources = [
 ]
 
 name = "LCIOWrapBuilder"
-version = VersionNumber(get(ENV, "TRAVIS_TAG", "0.99"))
+version = get(ENV, "TRAVIS_TAG")
+if version == ""
+	version = v"0.99"
+else
+	version = VersionNumber(version)
+end
 
 # Bash recipe for building across all platforms
 script = raw"""
