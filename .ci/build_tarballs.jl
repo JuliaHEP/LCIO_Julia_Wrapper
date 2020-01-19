@@ -8,7 +8,7 @@ sources = [
 ]
 
 name = "LCIOWrapBuilder"
-version = get(ENV, "TRAVIS_TAG")
+version = get(ENV, "TRAVIS_TAG", "")
 if version == ""
 	version = v"0.99"
 else
