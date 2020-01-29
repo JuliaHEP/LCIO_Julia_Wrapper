@@ -20,7 +20,7 @@ before_script:
 - cd ..
 - julia -e 'using Pkg; Pkg.add(PackageSpec(name="BinaryBuilder"))'
 script:
-- julia --color=yes LCIOWrapBuilder/.ci/build_tarballs.jl
+- julia --color=yes LCIO_Julia_Wrapper/.ci/build_tarballs.jl
 deploy:
   provider: releases
   api_key:
@@ -29,5 +29,5 @@ deploy:
   file: products/*
   skip_cleanup: true
   on:
-    repo: jstrube/LCIOWrapBuilder
+    repo: jstrube/LCIO_Julia_Wrapper
     tags: true
