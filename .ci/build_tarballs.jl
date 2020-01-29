@@ -4,10 +4,10 @@ using BinaryBuilder
 
 # Collection of sources required to build LCIOWrapBuilder
 sources = [
-    "LCIOWrapBuilder"
+    "LCIO_Julia_Wrapper"
 ]
 
-name = "LCIOWrapBuilder"
+name = "LCIO_Julia_Wrapper"
 version = get(ENV, "TRAVIS_TAG", "")
 if version == ""
 	version = v"0.99"

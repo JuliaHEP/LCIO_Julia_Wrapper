@@ -1,6 +1,14 @@
 project(lciowrapper)
 
 cmake_minimum_required(VERSION 3.1)
+# Cmake policies
+# ==============
+if(POLICY CMP0074)
+    # find_package() uses <PackageName>_ROOT variables.
+    # This policy was introduced in CMake version 3.12.
+    cmake_policy(SET CMP0074 NEW)
+endif()
+
 # this helps Libdl.dlopen find the right paths
 set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib;${LCIO_LIBRARY_DIRS};${Julia_LIBRARY_DIR}")
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR})
