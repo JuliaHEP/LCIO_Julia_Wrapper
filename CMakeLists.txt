@@ -1,6 +1,6 @@
 project(lciowrapper)
 
-cmake_minimum_required(VERSION 2.8.12)
+cmake_minimum_required(VERSION 3.1)
 # this helps Libdl.dlopen find the right paths
 set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib;${LCIO_LIBRARY_DIRS};${Julia_LIBRARY_DIR}")
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR})
@@ -25,7 +25,6 @@ find_package(LCIO REQUIRED)
 
 # JlCxx_DIR needs to be passed in with -D
 find_package(JlCxx REQUIRED )
-
 
 include_directories(${CMAKE_SOURCE_DIR}/include)
 include_directories(${INTERFACE_INCLUDE_DIRECTORIES})
