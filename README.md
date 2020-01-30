@@ -1,4 +1,4 @@
-# LCIOWrapBuilder
+# LCIO_Julia_Wrapper
 [![Build Status](https://travis-ci.com/jstrube/LCIO_Julia_Wrapper.svg?branch=master)](https://travis-ci.com/jstrube/LCIO_Julia_Wrapper)
 
 Code to wrap LCIO in Julia
@@ -27,7 +27,7 @@ Code to wrap LCIO in Julia
     ```
 - Check out this package and build
     ```
-    cd LCIOWrapBuilder
+    cd LCIO_Julia_Wrapper
     mkdir build && cd build
     cmake ..
     make -j4
