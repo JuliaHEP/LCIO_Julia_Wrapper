@@ -4,7 +4,7 @@ using BinaryBuilder
 
 # Collection of sources required to build LCIOWrapBuilder
 sources = [
-    "LCIO_Julia_Wrapper"
+    GitSource("LCIO_Julia_Wrapper")
 ]
 
 name = "LCIO_Julia_Wrapper"
@@ -41,10 +41,10 @@ products = [
 
 # Dependencies that must be installed before this package can be built
 dependencies = [
-	"libcxxwrap_julia_jll",
-	"LCIO_jll"
+	Dependency("libcxxwrap_julia_jll"),
+	Dependency("LCIO_jll")
 ]
 
 # Build the tarballs, and possibly a `build.jl` as well.
-build_tarballs(ARGS, name, version, sources, script, platforms, products, dependencies; preferred_gcc_version=v"8")
+build_tarballs(ARGS, name, version, sources, script, platforms, products, dependencies; preferred_gcc_version=v"7")
 
