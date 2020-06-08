@@ -4,7 +4,7 @@ using BinaryBuilder
 
 # Collection of sources required to build LCIOWrapBuilder
 sources = [
-    "LCIO_Julia_Wrapper"
+    DirectorySource("LCIO_Julia_Wrapper")
 ]
 
 name = "LCIO_Julia_Wrapper"
