@@ -75,8 +75,8 @@ lciowrap.method("getMomentumAtEndpoint3", [](const EVENT::MCParticle* p, ArrayRe
 lciowrap.add_type<UTIL::LCStdHepRdr>("_LCStdHepRdrCpp")
     .constructor<const char*>()
     .method("getNumberOfEvents", &UTIL::LCStdHepRdr::getNumberOfEvents);
-lciowrap.method("updateNextEvent", [](UTIL::LCStdHepRdr& reader, IMPL::LCEventImpl* evt, const char* colName=EVENT::LCIO::MCPARTICLE) {
-    reader.updateNextEvent(evt, colName);
+lciowrap.method("updateNextEvent", [](UTIL::LCStdHepRdr& reader, IMPL::LCEventImpl& evt, const char* colName=EVENT::LCIO::MCPARTICLE) {
+    reader.updateNextEvent(&evt, colName);
 });
 
 

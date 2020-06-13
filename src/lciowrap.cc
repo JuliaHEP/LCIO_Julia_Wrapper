@@ -150,7 +150,8 @@ JLCXX_MODULE define_julia_module(jlcxx::Module& lciowrap)
         .method("getWeight", &LCEvent::getWeight);
 
     lciowrap.add_type<LCEventImpl>("LCEventImpl", jlcxx::julia_base_type<LCEvent>())
-        .method("setEventNumber", &LCEventImpl::setEventNumber);
+        .method("setEventNumber", &LCEventImpl::setEventNumber)
+        .method("removeCollection", &LCEventImpl::removeCollection);
     
     lciowrap.method("addCollection", [](LCEventImpl& event, LCCollectionVec& col, const std::string& name) {
         event.addCollection(&col, name);

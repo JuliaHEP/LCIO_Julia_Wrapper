@@ -10,21 +10,15 @@ sources = [
 name = "LCIO_Julia_Wrapper"
 version = get(ENV, "TRAVIS_TAG", "")
 if version == ""
-	version = v"0.99"
+	version = v"0.103"
 else
 	version = VersionNumber(version)
 end
 
 # Bash recipe for building across all platforms
 script = raw"""
-	wget https://github.com/Gnimuc/JuliaBuilder/releases/download/v1.3.0/julia-1.3.0-${target}.tar.gz
-	tar xzf julia-1.3.0-${target}.tar.gz
-	export PATH=$(pwd)/juliabin/bin:${PATH}
-	ln -s ${WORKSPACE}/srcdir/juliabin/include/ /opt/${target}/${target}/sys-root/usr/local
-	cd ${WORKSPACE}/srcdir
 	mkdir build && cd build
-	cmake -DCMAKE_INSTALL_PREFIX=$prefix -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLCHAIN} -DCMAKE_BUILD_TYPE=Release ..
-	#cmake -DCMAKE_INSTALL_PREFIX=${prefix} -DCMAKE_TOOLCHAIN_FILE=/opt/${target}/${target}.toolchain -DCMAKE_FIND_ROOT_PATH=${prefix} -DJulia_PREFIX=${prefix} ..
+	cmake -DJulia_PREFIX=${prefix} -DCMAKE_INSTALL_PREFIX=$prefix -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TARGET_TOOLCHAIN} -DCMAKE_BUILD_TYPE=Release -DCMAKE_FIND_ROOT_PATH=${prefix} ..
 	VERBOSE=ON cmake --build . --config Release --target install
 """
 
@@ -42,7 +36,8 @@ products = [
 # Dependencies that must be installed before this package can be built
 dependencies = [
 	Dependency("libcxxwrap_julia_jll"),
-	Dependency("LCIO_jll")
+	Dependency("LCIO_jll"),
+	BuildDependency("Julia_jll")
 ]
 
 # Build the tarballs, and possibly a `build.jl` as well.
