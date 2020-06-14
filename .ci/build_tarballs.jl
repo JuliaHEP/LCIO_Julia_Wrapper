@@ -1,6 +1,7 @@
 # Note that this script can accept some limited command-line arguments, run
 # `julia build_tarballs.jl --help` to see a usage message.
 using BinaryBuilder
+using Pkg
 
 # Collection of sources required to build LCIOWrapBuilder
 sources = [
@@ -10,7 +11,7 @@ sources = [
 name = "LCIO_Julia_Wrapper"
 version = get(ENV, "TRAVIS_TAG", "")
 if version == ""
-	version = v"0.103"
+	version = v"0.104"
 else
 	version = VersionNumber(version)
 end
@@ -35,9 +36,9 @@ products = [
 
 # Dependencies that must be installed before this package can be built
 dependencies = [
-	Dependency("libcxxwrap_julia_jll"),
+	Dependency(PackageSpec(name="libcxxwrap_julia_jll",version=v"0.8")),
 	Dependency("LCIO_jll"),
-	BuildDependency("Julia_jll")
+	BuildDependency(PackageSpec(name="Julia_jll",version=v"1.4.1"))
 ]
 
 # Build the tarballs, and possibly a `build.jl` as well.
