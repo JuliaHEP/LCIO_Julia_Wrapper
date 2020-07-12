@@ -11,10 +11,10 @@ lciowrap.add_type<EVENT::SimCalorimeterHit>("SimCalorimeterHit")
     .method("getCellID1", &EVENT::SimCalorimeterHit::getCellID1)
     .method("getEnergy", &EVENT::SimCalorimeterHit::getEnergy)
     .method("getNMCContributions", &EVENT::SimCalorimeterHit::getNMCContributions)
-    .method("getEnergyCont", &EVENT::SimCalorimeterHit::getEnergyCont)
-    .method("getTimeCont", &EVENT::SimCalorimeterHit::getTimeCont)
-    .method("getPDGCont", &EVENT::SimCalorimeterHit::getPDGCont)
-    .method("getParticleCont", &EVENT::SimCalorimeterHit::getParticleCont);
+    .method("_getEnergyCont", &EVENT::SimCalorimeterHit::getEnergyCont)
+    .method("_getTimeCont", &EVENT::SimCalorimeterHit::getTimeCont)
+    .method("_getPDGCont", &EVENT::SimCalorimeterHit::getPDGCont)
+    .method("_getParticleCont", &EVENT::SimCalorimeterHit::getParticleCont);
 
 // returns a bool to indicate whether this was a nullptr
 lciowrap.method("getPosition3", [](const EVENT::SimCalorimeterHit* hit, ArrayRef<double> x)->bool {
