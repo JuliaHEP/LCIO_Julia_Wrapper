@@ -11,7 +11,7 @@ sources = [
 name = "LCIO_Julia_Wrapper"
 version = get(ENV, "TRAVIS_TAG", "")
 if version == ""
-	version = v"0.104"
+	version = v"0.9.1-alpha4"
 else
 	version = VersionNumber(version)
 end
@@ -26,7 +26,7 @@ script = raw"""
 # These are the platforms we will build for by default, unless further
 # platforms are passed in on the command line
 platforms = Platform[
-    Linux(:x86_64, libc=:glibc),
+    Linux(:x86_64, libc=:glibc, compiler_abi=CompilerABI(cxxstring_abi=:cxx11)),
 ]
 
 # The products that we will ensure are always built
@@ -36,8 +36,8 @@ products = [
 
 # Dependencies that must be installed before this package can be built
 dependencies = [
-	Dependency(PackageSpec(name="libcxxwrap_julia_jll",version=v"0.8")),
-	Dependency("LCIO_jll"),
+	Dependency(PackageSpec(name="libcxxwrap_julia_jll",version=v"0.8.0")),
+	Dependency(PackageSpec(name="LCIO_jll", version=v"2.14.1")),
 	BuildDependency(PackageSpec(name="Julia_jll",version=v"1.4.1"))
 ]
 
