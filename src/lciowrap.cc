@@ -18,6 +18,7 @@
 #include "EVENT/TrackerPulse.h"
 #include "EVENT/TrackerRawData.h"
 #include "EVENT/TrackerHit.h"
+#include "EVENT/TrackerHitPlane.h"
 #include "EVENT/Vertex.h"
 #include "IMPL/LCCollectionVec.h"
 #include "IMPL/LCEventImpl.h"
@@ -258,6 +259,7 @@ JLCXX_MODULE define_julia_module(jlcxx::Module& lciowrap)
              , TypedCollection<SimTrackerHit>
              , TypedCollection<Track>
              , TypedCollection<TrackerHit>
+             , TypedCollection<TrackerHitPlane>
              , TypedCollection<TrackerRawData>
              , TypedCollection<Vertex>
              >([](auto wrapped)

@@ -84,3 +84,5 @@ lciowrap.method("getTracks", [](const Track* t)->const std::vector<EVENT::Track*
 lciowrap.method("getTrackStates", [](const Track* t)->const std::vector<EVENT::TrackState*>& {
     return t->getTrackStates();
 });
+
+lciowrap.add_type<EVENT::TrackerHitPlane>("TrackerHitPlane");
