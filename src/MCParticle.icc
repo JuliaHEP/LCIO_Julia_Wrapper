@@ -1,6 +1,6 @@
 // This is the implementation of the wrappers for the MCParticle class
 
-lciowrap.add_type<EVENT::MCParticle>("MCParticle")
+lciowrap.add_type<EVENT::MCParticle>("MCParticle", jlcxx::julia_base_type<LCObject>())
     .method("getEnergy", &EVENT::MCParticle::getEnergy)
     .method("getPDG", &EVENT::MCParticle::getPDG)
     .method("getGeneratorStatus", &EVENT::MCParticle::getGeneratorStatus)

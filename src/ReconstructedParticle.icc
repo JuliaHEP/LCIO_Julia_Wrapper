@@ -1,6 +1,6 @@
 // This is the implementation of the wrappers for the ReconstructedParticle class
 
-lciowrap.add_type<EVENT::ReconstructedParticle>("ReconstructedParticle")
+lciowrap.add_type<EVENT::ReconstructedParticle>("ReconstructedParticle", jlcxx::julia_base_type<LCObject>())
     .method("getType", &EVENT::ReconstructedParticle::getType)
     .method("isCompound", &EVENT::ReconstructedParticle::isCompound)
     .method("getEnergy", &EVENT::ReconstructedParticle::getEnergy)

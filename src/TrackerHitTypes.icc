@@ -34,7 +34,7 @@ lciowrap.method("getMomentum3", [](const EVENT::SimTrackerHit* hit, ArrayRef<dou
     return true;
 });
 
-lciowrap.add_type<EVENT::TrackerHit>("TrackerHit")
+lciowrap.add_type<EVENT::TrackerHit>("TrackerHit", jlcxx::julia_base_type<LCObject>())
     .method("getCellID0", &EVENT::TrackerHit::getCellID0)
     .method("getCellID1", &EVENT::TrackerHit::getCellID1)
     .method("getCovMatrix", &EVENT::TrackerHit::getCovMatrix)

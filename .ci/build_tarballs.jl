@@ -11,7 +11,7 @@ sources = [
 name = "LCIO_Julia_Wrapper"
 version = get(ENV, "TRAVIS_TAG", "")
 if version == ""
-	version = v"0.9.1-alpha4"
+	version = v"0.10.1-alpha18"
 else
 	version = VersionNumber(version)
 end

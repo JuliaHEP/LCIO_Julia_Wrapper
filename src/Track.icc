@@ -49,7 +49,7 @@ lciowrap.method("getReferencePoint3", [](const EVENT::TrackState* t, ArrayRef<do
     return true;
 });
 
-lciowrap.add_type<EVENT::Track>("Track")
+lciowrap.add_type<EVENT::Track>("Track", jlcxx::julia_base_type<LCObject>())
     .method("getType", &EVENT::Track::getType)
     .method("getD0", &EVENT::Track::getD0)
     .method("getPhi", &EVENT::Track::getPhi)

@@ -1,6 +1,6 @@
 // This is the implementation of the wrappers for the Cluster class
 
-lciowrap.add_type<EVENT::Cluster>("Cluster")
+lciowrap.add_type<EVENT::Cluster>("Cluster", jlcxx::julia_base_type<LCObject>())
     .method("getType", &EVENT::Cluster::getType)
     .method("getEnergy", &EVENT::Cluster::getEnergy)
     .method("getEnergyError", &EVENT::Cluster::getEnergyError)

@@ -26,7 +26,7 @@ lciowrap.method("getPosition3", [](const EVENT::SimCalorimeterHit* hit, ArrayRef
         return true;
     });
 
-lciowrap.add_type<EVENT::CalorimeterHit>("CalorimeterHit")
+lciowrap.add_type<EVENT::CalorimeterHit>("CalorimeterHit", jlcxx::julia_base_type<LCObject>())
     .method("getCellID0", &EVENT::CalorimeterHit::getCellID0)
     .method("getCellID1", &EVENT::CalorimeterHit::getCellID1)
     .method("getEnergy", &EVENT::CalorimeterHit::getEnergy)

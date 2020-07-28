@@ -62,10 +62,12 @@ struct TypedCollection
 };
 
 
-// This is just a functor to cast an LCObject to the right type
+// This is just a function to cast an LCObject to the right type
+// We can't wrap templated functions, though, so we're using a type
 template<typename T>
 struct CastOperator
 {
+    CastOperator() {}
     T* cast(LCObject* orig) {
         return static_cast<T*>(orig);
     }
@@ -78,6 +80,13 @@ namespace jlcxx
     template<> struct SuperType<LCCollectionVec> { typedef LCCollection type; };
     template<> struct SuperType<MCParticleImpl> { typedef MCParticle type; };
     template<> struct SuperType<LCRunHeaderImpl> { typedef LCRunHeader type; };
+    template<> struct SuperType<ReconstructedParticle> {typedef LCObject type; };
+    template<> struct SuperType<MCParticle> {typedef LCObject type; };
+    template<> struct SuperType<Track> {typedef LCObject type; };
+    template<> struct SuperType<Cluster> {typedef LCObject type; };
+    template<> struct SuperType<CalorimeterHit> {typedef LCObject type; };
+    template<> struct SuperType<TrackerHit> {typedef LCObject type; };
+    template<> struct SuperType<Vertex> {typedef LCObject type; };
 }
 
 
@@ -171,7 +180,7 @@ JLCXX_MODULE define_julia_module(jlcxx::Module& lciowrap)
         .method("getTo", &LCRelation::getTo)
         .method("getWeight", &LCRelation::getWeight);
 
-    lciowrap.add_type<Vertex>("Vertex")
+    lciowrap.add_type<Vertex>("Vertex", jlcxx::julia_base_type<LCObject>())
         .method("isPrimary", &Vertex::isPrimary)
         .method("getAlgorithmType", &Vertex::getAlgorithmType)
         .method("getChi2", &Vertex::getChi2)
@@ -300,13 +309,17 @@ JLCXX_MODULE define_julia_module(jlcxx::Module& lciowrap)
         wrapped.method(&WrappedT::operator());
     });
 
-    lciowrap.add_type<UTIL::LCRelationNavigator>("LCRelNav")
-        .method("getFromType", &UTIL::LCRelationNavigator::getFromType)
-        .method("getToType", &UTIL::LCRelationNavigator::getToType)
-        .method("getRelatedToObjects", &UTIL::LCRelationNavigator::getRelatedToObjects)
-        .method("getRelatedFromObjects", &UTIL::LCRelationNavigator::getRelatedFromObjects)
-        .method("getRelatedFromWeights", &UTIL::LCRelationNavigator::getRelatedFromWeights)
-        .method("getRelatedToWeights", &UTIL::LCRelationNavigator::getRelatedToWeights);
+    // We're using a Julia-internal name for the C++ object
+    // because we'll attach convenience methods and typing on the Julia side
+    lciowrap.add_type<UTIL::LCRelationNavigator>("_LCRelNav")
+        .constructor<const LCCollection*>()
+        .method("_getFromType", &UTIL::LCRelationNavigator::getFromType)
+        .method("_getToType", &UTIL::LCRelationNavigator::getToType)
+        .method("_getRelatedToObjects", &UTIL::LCRelationNavigator::getRelatedToObjects)
+        .method("_getRelatedFromObjects", &UTIL::LCRelationNavigator::getRelatedFromObjects)
+        .method("_getRelatedFromWeights", &UTIL::LCRelationNavigator::getRelatedFromWeights)
+        .method("_getRelatedToWeights", &UTIL::LCRelationNavigator::getRelatedToWeights);
+
 
     lciowrap.add_type<Parametric<TypeVar<1>>>("CastOperator")
     .apply<CastOperator<LCGenericObject>
@@ -322,6 +335,7 @@ JLCXX_MODULE define_julia_module(jlcxx::Module& lciowrap)
          >([](auto wrapped)
     {
         typedef typename decltype(wrapped)::type LCType;
+        wrapped.template constructor<>();
         wrapped.method("cast", &LCType::cast);
     });
 }
