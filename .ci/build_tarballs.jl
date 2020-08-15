@@ -11,7 +11,7 @@ sources = [
 name = "LCIO_Julia_Wrapper"
 version = get(ENV, "TRAVIS_TAG", "")
 if version == ""
-	version = v"0.10.1-alpha18"
+	version = v"0.12.0-alpha6"
 else
 	version = VersionNumber(version)
 end
@@ -37,10 +37,9 @@ products = [
 # Dependencies that must be installed before this package can be built
 dependencies = [
 	Dependency(PackageSpec(name="libcxxwrap_julia_jll",version=v"0.8.0")),
-	Dependency(PackageSpec(name="LCIO_jll", version=v"2.14.1")),
+	Dependency(PackageSpec(name="LCIO_jll", version=v"2.13.3")),
 	BuildDependency(PackageSpec(name="Julia_jll",version=v"1.4.1"))
 ]
 
 # Build the tarballs, and possibly a `build.jl` as well.
 build_tarballs(ARGS, name, version, sources, script, platforms, products, dependencies; preferred_gcc_version=v"7")
-

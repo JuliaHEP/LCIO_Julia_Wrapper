@@ -32,6 +32,7 @@
 #include "UTIL/LCRelationNavigator.h"
 #include "UTIL/LCStdHepRdr.h"
 #include "UTIL/LCTrackerConf.h"
+#include "UTIL/PIDHandler.h"
 #include "jlcxx/jlcxx.hpp"
 #include "jlcxx/stl.hpp"
 
@@ -67,6 +68,8 @@ struct TypedCollection
 template<typename T>
 struct CastOperator
 {
+    // we need to provide a default constructor,
+    // so CxxWrap can create finalizers.
     CastOperator() {}
     T* cast(LCObject* orig) {
         return static_cast<T*>(orig);
@@ -337,5 +340,20 @@ JLCXX_MODULE define_julia_module(jlcxx::Module& lciowrap)
         typedef typename decltype(wrapped)::type LCType;
         wrapped.template constructor<>();
         wrapped.method("cast", &LCType::cast);
+    });
+
+    lciowrap.add_type<UTIL::PIDHandler>("PIDHandler")
+        .constructor<const LCCollection*>()
+        .method("addAlgorithm", &UTIL::PIDHandler::addAlgorithm)
+        .method("getAlgorithmID", &UTIL::PIDHandler::getAlgorithmID)
+        .method("getAlgorithmIDs", &UTIL::PIDHandler::getAlgorithmIDs)
+        .method("getAlgorithmName", &UTIL::PIDHandler::getAlgorithmName)
+        .method("getParameterNames", &UTIL::PIDHandler::getParameterNames)
+        .method("getParticleID", &UTIL::PIDHandler::getParticleID)
+        .method("getParticleIDs", &UTIL::PIDHandler::getParticleIDs);
+
+    lciowrap.method("getParameterIndex", [](UTIL::PIDHandler& pidh, int algorithmID, const std::string& pName) {
+        // Julia starts counting at 1
+        return pidh.getParameterIndex(algorithmID, pName) + 1;
     });
 }
