@@ -10,7 +10,9 @@ lciowrap.add_type<EVENT::ReconstructedParticle>("ReconstructedParticle", jlcxx::
     .method("getClusters", &EVENT::ReconstructedParticle::getClusters)
     .method("getTracks", &EVENT::ReconstructedParticle::getTracks)
     .method("getStartVertex", &EVENT::ReconstructedParticle::getStartVertex)
-    .method("getEndVertex", &EVENT::ReconstructedParticle::getEndVertex);
+    .method("getEndVertex", &EVENT::ReconstructedParticle::getEndVertex)
+    .method("getParticleIDUsed", &EVENT::ReconstructedParticle::getParticleIDUsed);
+
 lciowrap.method("getMomentum3", [](const EVENT::ReconstructedParticle* p, ArrayRef<double> mom)->bool {
     const double* p3 = p->getMomentum();
     if (not p3) {return false;}
@@ -29,9 +31,6 @@ lciowrap.method("getReferencePoint3", [](const EVENT::ReconstructedParticle* p, 
     point[1] = x[1];
     point[2] = x[2];
     return true;
-});
-lciowrap.method("getParticleIDUsed", [](){
-    cerr << "not yet implemented" << endl;
 });
 
 jlcxx::stl::apply_stl<EVENT::ReconstructedParticle*>(lciowrap);
