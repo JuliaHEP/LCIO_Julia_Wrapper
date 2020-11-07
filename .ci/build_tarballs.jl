@@ -11,7 +11,7 @@ sources = [
 name = "LCIO_Julia_Wrapper"
 version = get(ENV, "TRAVIS_TAG", "")
 if version == ""
-	version = v"0.12.0-alpha6"
+	version = v"0.13.0-alpha1"
 else
 	version = VersionNumber(version)
 end
@@ -37,7 +37,7 @@ products = [
 # Dependencies that must be installed before this package can be built
 dependencies = [
 	Dependency(PackageSpec(name="libcxxwrap_julia_jll",version=v"0.8.0")),
-	Dependency(PackageSpec(name="LCIO_jll", version=v"2.13.3")),
+	Dependency(PackageSpec(name="LCIO_jll", version=v"2.15.3")),
 	BuildDependency(PackageSpec(name="Julia_jll",version=v"1.4.1"))
 ]
 
