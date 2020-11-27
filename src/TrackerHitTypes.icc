@@ -17,21 +17,35 @@ jlcxx::stl::apply_stl<EVENT::SimTrackerHit*>(lciowrap);
 // returns a bool to indicate whether this was a nullptr
 lciowrap.method("getPosition3", [](const EVENT::SimTrackerHit* hit, ArrayRef<double> x)->bool {
     const double* p = hit->getPosition();
-    if (not p) {return false;}
-        x[0] = p[0];
-        x[1] = p[1];
-        x[2] = p[2];
+    if (not p) return false;
+    x[0] = p[0];
+    x[1] = p[1];
+    x[2] = p[2];
     return true;
+});
+lciowrap.method("_getPosition", [](const EVENT::SimTrackerHit* hit) {
+    const double* p = hit->getPosition();
+    if (not p) {
+        return make_tuple(nan(""), nan(""), nan(""));
+    }
+    return make_tuple(p[0], p[1], p[2]);
 });
 
 // returns a bool to indicate whether this was a nusllptr
 lciowrap.method("getMomentum3", [](const EVENT::SimTrackerHit* hit, ArrayRef<double> x)->bool {
     const float* p = hit->getMomentum();
-    if (not p) {return false;}
-        x[0] = p[0];
-        x[1] = p[1];
-        x[2] = p[2];
+    if (not p) return false;
+    x[0] = p[0];
+    x[1] = p[1];
+    x[2] = p[2];
     return true;
+});
+lciowrap.method("_getMomentum", [](const EVENT::SimTrackerHit* hit) {
+    const float* p = hit->getMomentum();
+    if (not p) {
+        return make_tuple(nanf(""), nanf(""), nanf(""));
+    }
+    return make_tuple(p[0], p[1], p[2]);
 });
 
 lciowrap.add_type<EVENT::TrackerHit>("TrackerHit", jlcxx::julia_base_type<LCObject>())
@@ -48,11 +62,18 @@ lciowrap.add_type<EVENT::TrackerHit>("TrackerHit", jlcxx::julia_base_type<LCObje
 // returns a bool to indicate whether this was a nullptr
 lciowrap.method("getPosition3", [](const EVENT::TrackerHit* hit, ArrayRef<double> x)->bool {
     const double* p = hit->getPosition();
-    if (not p) {return false;}
-        x[0] = p[0];
-        x[1] = p[1];
-        x[2] = p[2];
+    if (not p) return false;
+    x[0] = p[0];
+    x[1] = p[1];
+    x[2] = p[2];
     return true;
+});
+lciowrap.method("_getPosition", [](const EVENT::TrackerHit* hit) {
+    const double* p = hit->getPosition();
+    if (not p) {
+        return make_tuple(nan(""), nan(""), nan(""));
+    }
+    return make_tuple(p[0], p[1], p[2]);
 });
 
 jlcxx::stl::apply_stl<EVENT::TrackerHit*>(lciowrap);

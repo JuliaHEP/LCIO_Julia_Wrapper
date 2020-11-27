@@ -32,38 +32,69 @@ lciowrap.method("getDaughters", [](const EVENT::MCParticle* p)->const std::vecto
 // returns a bool to indicate whether this was a nullptr
 lciowrap.method("getVertex3", [](const EVENT::MCParticle* p, ArrayRef<double> v)->bool {
     const double* vtx = p->getVertex();
-    if (not vtx) {return false;}
+    if (not vtx) return false;
     v[0] = vtx[0];
     v[1] = vtx[1];
     v[2] = vtx[2];
     return true;
 });
+lciowrap.method("_getVertex", [](const EVENT::MCParticle* p) {
+    const double* vtx = p->getVertex();
+    if (not vtx) {
+        return make_tuple(nan(""), nan(""), nan(""));
+    }
+    return make_tuple(vtx[0], vtx[1], vtx[2]);
+});
+
 // returns a bool to indicate whether this was a nullptr
 lciowrap.method("getEndpoint3", [](const EVENT::MCParticle* p, ArrayRef<double> pos)->bool {
     const double* endp = p->getEndpoint();
-    if (not endp) {return false;}
+    if (not endp) return false;
     pos[0] = endp[0];
     pos[1] = endp[1];
     pos[2] = endp[2];
     return true;
 });
+lciowrap.method("_getEndpoint", [](const EVENT::MCParticle* p) {
+    const double* endp = p->getEndpoint();
+    if (not endp) {
+        return make_tuple(nan(""), nan(""), nan(""));
+    }
+    return make_tuple(endp[0], endp[1], endp[2]);
+});
+
 // returns a bool to indicate whether this was a nullptr
 lciowrap.method("getMomentum3", [](const EVENT::MCParticle* p, ArrayRef<double> p3)->bool {
     const double* mom = p->getMomentum();
-    if (not mom) {return false;}
+    if (not mom) return false;
     p3[0] = mom[0];
     p3[1] = mom[1];
     p3[2] = mom[2];
     return true;
 });
+lciowrap.method("_getMomentum", [](const EVENT::MCParticle* p) {
+    const double* mom = p->getMomentum();
+    if (not mom) {
+        return make_tuple(nan(""), nan(""), nan(""));
+    }
+    return make_tuple(mom[0], mom[1], mom[2]);
+});
+
 // returns a bool to indicate whether this was a nullptr
 lciowrap.method("getMomentumAtEndpoint3", [](const EVENT::MCParticle* p, ArrayRef<double> p3)->bool {
     const double* mom = p->getMomentumAtEndpoint();
-    if (not mom) {return false;}
+    if (not mom) return false;
     p3[0] = mom[0];
     p3[1] = mom[1];
     p3[2] = mom[2];
     return true;
+});
+lciowrap.method("_getMomentumAtEndpoint", [](const EVENT::MCParticle* p) {
+    const double* mom = p->getMomentumAtEndpoint();
+    if (not mom) {
+        return make_tuple(nan(""), nan(""), nan(""));
+    }
+    return make_tuple(mom[0], mom[1], mom[2]);
 });
 
 // This is the C++ implementation

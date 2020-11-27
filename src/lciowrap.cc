@@ -192,11 +192,18 @@ JLCXX_MODULE define_julia_module(jlcxx::Module& lciowrap)
         .method("getParameters", &Vertex::getParameters);
     lciowrap.method("getPosition3", [](const Vertex* v, ArrayRef<double> x)->bool {
         const float* p3 = v->getPosition();
-        if (not p3) {return false;}
+        if (not p3) return false;
         x[0] = p3[0];
         x[1] = p3[1];
         x[2] = p3[2];
         return true;
+    });
+    lciowrap.method("_getPosition", [](const Vertex* v) {
+        const float* p3 = v->getPosition();
+        if (not p3) {
+            return make_tuple(nanf(""), nanf(""), nanf(""));
+        }
+        return make_tuple(p3[0], p3[1], p3[2]);
     });
 
     #include "Track.icc"

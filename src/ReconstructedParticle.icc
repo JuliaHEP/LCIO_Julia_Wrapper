@@ -11,26 +11,39 @@ lciowrap.add_type<EVENT::ReconstructedParticle>("ReconstructedParticle", jlcxx::
     .method("getTracks", &EVENT::ReconstructedParticle::getTracks)
     .method("getStartVertex", &EVENT::ReconstructedParticle::getStartVertex)
     .method("getEndVertex", &EVENT::ReconstructedParticle::getEndVertex)
-    .method("getParticleIDUsed", &EVENT::ReconstructedParticle::getParticleIDUsed);
+    .method("getParticleIDUsed", &EVENT::ReconstructedParticle::getParticleIDUsed)
+    .method("getCovMatrix", &EVENT::ReconstructedParticle::getCovMatrix);
 
 lciowrap.method("getMomentum3", [](const EVENT::ReconstructedParticle* p, ArrayRef<double> mom)->bool {
     const double* p3 = p->getMomentum();
-    if (not p3) {return false;}
+    if (not p3) return false;
     mom[0] = p3[0];
     mom[1] = p3[1];
     mom[2] = p3[2];
     return true;
 });
-lciowrap.method("getCovMatrix", [](){
-    cerr << "not yet implemented" << endl;
+lciowrap.method("_getMomentum", [](const EVENT::ReconstructedParticle* p) {
+    const double* p3 = p->getMomentum();
+    if (not p3) {
+        return make_tuple(nan(""), nan(""), nan(""));
+    }
+    return make_tuple(p3[0], p3[1], p3[2]);
 });
+
 lciowrap.method("getReferencePoint3", [](const EVENT::ReconstructedParticle* p, ArrayRef<double> point)->bool {
     const float* x = p->getReferencePoint();
-    if (not x) {return false;}
+    if (not x) return false;
     point[0] = x[0];
     point[1] = x[1];
     point[2] = x[2];
     return true;
+});
+lciowrap.method("_getReferencePoint", [](const EVENT::ReconstructedParticle* p) {
+    const float* x = p->getReferencePoint();
+    if (not x) {
+        return make_tuple(nanf(""), nanf(""), nanf(""));
+    }
+    return make_tuple(x[0], x[1], x[2]);
 });
 
 jlcxx::stl::apply_stl<EVENT::ReconstructedParticle*>(lciowrap);

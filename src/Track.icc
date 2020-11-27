@@ -42,11 +42,18 @@ jlcxx::stl::apply_stl<EVENT::TrackState*>(lciowrap);
 
 lciowrap.method("getReferencePoint3", [](const EVENT::TrackState* t, ArrayRef<double> x)->bool {
     const float* p3 = t->getReferencePoint();
-    if (not p3) {return false;}
+    if (not p3) return false;
     x[0] = p3[0];
     x[1] = p3[1];
     x[2] = p3[2];
     return true;
+});
+lciowrap.method("_getReferencePoint", [](const EVENT::TrackState* t) {
+    const float* p3 = t->getReferencePoint();
+    if (not p3) {
+        return make_tuple(nanf(""), nanf(""), nanf(""));
+    }
+    return make_tuple(p3[0], p3[1], p3[2]);
 });
 
 lciowrap.add_type<EVENT::Track>("Track", jlcxx::julia_base_type<LCObject>())
@@ -71,12 +78,20 @@ jlcxx::stl::apply_stl<EVENT::Track*>(lciowrap);
 
 lciowrap.method("getReferencePoint3", [](const EVENT::Track* t, ArrayRef<double> x)->bool {
     const float* p3 = t->getReferencePoint();
-    if (not p3) {return false;}
+    if (not p3) return false;
     x[0] = p3[0];
     x[1] = p3[1];
     x[2] = p3[2];
     return true;
 });
+lciowrap.method("_getReferencePoint", [](const EVENT::Track* t) {
+    const float* p3 = t->getReferencePoint();
+    if (not p3) {
+        return make_tuple(nanf(""), nanf(""), nanf(""));
+    }
+    return make_tuple(p3[0], p3[1], p3[2]);
+});
+
 lciowrap.method("getTracks", [](const Track* t)->const std::vector<EVENT::Track*>& {
     return t->getTracks();
 });
