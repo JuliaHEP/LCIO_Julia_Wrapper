@@ -192,7 +192,12 @@ JLCXX_MODULE define_julia_module(jlcxx::Module& lciowrap)
         .method("getParameters", &Vertex::getParameters);
     lciowrap.method("getPosition3", [](const Vertex* v, ArrayRef<double> x)->bool {
         const float* p3 = v->getPosition();
-        if (not p3) return false;
+        if (not p3) {
+            x[0] = nan("");
+            x[1] = nan("");
+            x[2] = nan("");
+            return false;
+        }
         x[0] = p3[0];
         x[1] = p3[1];
         x[2] = p3[2];

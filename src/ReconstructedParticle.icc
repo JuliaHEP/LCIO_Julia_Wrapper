@@ -16,7 +16,12 @@ lciowrap.add_type<EVENT::ReconstructedParticle>("ReconstructedParticle", jlcxx::
 
 lciowrap.method("getMomentum3", [](const EVENT::ReconstructedParticle* p, ArrayRef<double> mom)->bool {
     const double* p3 = p->getMomentum();
-    if (not p3) return false;
+    if (not p3) {
+        mom[0] = nan("");
+        mom[1] = nan("");
+        mom[2] = nan("");
+        return false;
+    }
     mom[0] = p3[0];
     mom[1] = p3[1];
     mom[2] = p3[2];
@@ -32,7 +37,12 @@ lciowrap.method("_getMomentum", [](const EVENT::ReconstructedParticle* p) {
 
 lciowrap.method("getReferencePoint3", [](const EVENT::ReconstructedParticle* p, ArrayRef<double> point)->bool {
     const float* x = p->getReferencePoint();
-    if (not x) return false;
+    if (not x) {
+        point[0] = nan("");
+        point[1] = nan("");
+        point[2] = nan("");
+        return false;
+    }
     point[0] = x[0];
     point[1] = x[1];
     point[2] = x[2];

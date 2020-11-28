@@ -24,7 +24,12 @@ lciowrap.method("getClusters", [](const EVENT::Cluster* c)->const std::vector<Cl
 
 lciowrap.method("getPosition3", [](const EVENT::Cluster* c, ArrayRef<double> x)->bool {
     const float* p3 = c->getPosition();
-    if (not p3) return false;
+    if (not p3) {
+        x[0] = nan("");
+        x[1] = nan("");
+        x[2] = nan("");
+        return false;
+    }
     x[0] = p3[0];
     x[1] = p3[1];
     x[2] = p3[2];

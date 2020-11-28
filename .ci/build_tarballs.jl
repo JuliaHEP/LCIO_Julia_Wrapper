@@ -13,7 +13,7 @@ julia_version = v"1.5.3"
 name = "LCIO_Julia_Wrapper"
 version = get(ENV, "TRAVIS_TAG", "")
 if version == ""
-	version = v"0.13.0-alpha4"
+	version = v"0.13.1-alpha1"
 else
 	version = VersionNumber(version)
 end

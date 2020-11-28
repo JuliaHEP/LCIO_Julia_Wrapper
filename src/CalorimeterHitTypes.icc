@@ -19,7 +19,12 @@ lciowrap.add_type<EVENT::SimCalorimeterHit>("SimCalorimeterHit")
 // returns a bool to indicate whether this was a nullptr
 lciowrap.method("getPosition3", [](const EVENT::SimCalorimeterHit* hit, ArrayRef<double> x)->bool {
     const float* p = hit->getPosition();
-    if (not p) return false;
+    if (not p) {
+        x[0] = nan("");
+        x[1] = nan("");
+        x[2] = nan("");
+        return false;
+    }
     x[0] = p[0];
     x[1] = p[1];
     x[2] = p[2];
@@ -42,7 +47,12 @@ lciowrap.add_type<EVENT::CalorimeterHit>("CalorimeterHit", jlcxx::julia_base_typ
     .method("getType", &EVENT::CalorimeterHit::getType);
 lciowrap.method("getPosition3", [](const EVENT::CalorimeterHit* hit, ArrayRef<double> x)->bool {
     const float* p = hit->getPosition();
-    if (not p) return false;
+    if (not p) {
+        x[0] = nan("");
+        x[1] = nan("");
+        x[2] = nan("");
+        return false;
+    }
     x[0] = p[0];
     x[1] = p[1];
     x[2] = p[2];
@@ -53,7 +63,6 @@ lciowrap.method("_getPosition", [](const EVENT::CalorimeterHit* hit) {
     if (not p) {
         return make_tuple(nanf(""), nanf(""), nanf(""));
     }
-
     return make_tuple(p[0], p[1], p[2]);
 });
 

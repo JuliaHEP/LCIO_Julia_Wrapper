@@ -42,7 +42,12 @@ jlcxx::stl::apply_stl<EVENT::TrackState*>(lciowrap);
 
 lciowrap.method("getReferencePoint3", [](const EVENT::TrackState* t, ArrayRef<double> x)->bool {
     const float* p3 = t->getReferencePoint();
-    if (not p3) return false;
+    if (not p3) {
+        x[0] = nan("");
+        x[1] = nan("");
+        x[2] = nan("");
+        return false;
+    }
     x[0] = p3[0];
     x[1] = p3[1];
     x[2] = p3[2];
@@ -78,7 +83,12 @@ jlcxx::stl::apply_stl<EVENT::Track*>(lciowrap);
 
 lciowrap.method("getReferencePoint3", [](const EVENT::Track* t, ArrayRef<double> x)->bool {
     const float* p3 = t->getReferencePoint();
-    if (not p3) return false;
+    if (not p3) {
+        x[0] = nan("");
+        x[1] = nan("");
+        x[2] = nan("");
+        return false;
+    }
     x[0] = p3[0];
     x[1] = p3[1];
     x[2] = p3[2];

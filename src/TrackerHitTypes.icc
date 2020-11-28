@@ -17,7 +17,12 @@ jlcxx::stl::apply_stl<EVENT::SimTrackerHit*>(lciowrap);
 // returns a bool to indicate whether this was a nullptr
 lciowrap.method("getPosition3", [](const EVENT::SimTrackerHit* hit, ArrayRef<double> x)->bool {
     const double* p = hit->getPosition();
-    if (not p) return false;
+    if (not p) {
+        x[0] = nan("");
+        x[1] = nan("");
+        x[2] = nan("");
+        return false;
+    }
     x[0] = p[0];
     x[1] = p[1];
     x[2] = p[2];
@@ -34,7 +39,12 @@ lciowrap.method("_getPosition", [](const EVENT::SimTrackerHit* hit) {
 // returns a bool to indicate whether this was a nusllptr
 lciowrap.method("getMomentum3", [](const EVENT::SimTrackerHit* hit, ArrayRef<double> x)->bool {
     const float* p = hit->getMomentum();
-    if (not p) return false;
+    if (not p) {
+        x[0] = nan("");
+        x[1] = nan("");
+        x[2] = nan("");
+        return false;
+    }
     x[0] = p[0];
     x[1] = p[1];
     x[2] = p[2];
@@ -62,7 +72,12 @@ lciowrap.add_type<EVENT::TrackerHit>("TrackerHit", jlcxx::julia_base_type<LCObje
 // returns a bool to indicate whether this was a nullptr
 lciowrap.method("getPosition3", [](const EVENT::TrackerHit* hit, ArrayRef<double> x)->bool {
     const double* p = hit->getPosition();
-    if (not p) return false;
+    if (not p) {
+        x[0] = nan("");
+        x[1] = nan("");
+        x[2] = nan("");
+        return false;
+    }
     x[0] = p[0];
     x[1] = p[1];
     x[2] = p[2];

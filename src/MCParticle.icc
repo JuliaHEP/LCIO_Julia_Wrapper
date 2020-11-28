@@ -32,7 +32,12 @@ lciowrap.method("getDaughters", [](const EVENT::MCParticle* p)->const std::vecto
 // returns a bool to indicate whether this was a nullptr
 lciowrap.method("getVertex3", [](const EVENT::MCParticle* p, ArrayRef<double> v)->bool {
     const double* vtx = p->getVertex();
-    if (not vtx) return false;
+    if (not vtx) {
+        v[0] = nan("");
+        v[1] = nan("");
+        v[2] = nan("");
+        return false;
+    }
     v[0] = vtx[0];
     v[1] = vtx[1];
     v[2] = vtx[2];
@@ -49,7 +54,12 @@ lciowrap.method("_getVertex", [](const EVENT::MCParticle* p) {
 // returns a bool to indicate whether this was a nullptr
 lciowrap.method("getEndpoint3", [](const EVENT::MCParticle* p, ArrayRef<double> pos)->bool {
     const double* endp = p->getEndpoint();
-    if (not endp) return false;
+    if (not endp) {
+        pos[0] = nan("");
+        pos[1] = nan("");
+        pos[2] = nan("");
+        return false;
+    }
     pos[0] = endp[0];
     pos[1] = endp[1];
     pos[2] = endp[2];
@@ -66,7 +76,12 @@ lciowrap.method("_getEndpoint", [](const EVENT::MCParticle* p) {
 // returns a bool to indicate whether this was a nullptr
 lciowrap.method("getMomentum3", [](const EVENT::MCParticle* p, ArrayRef<double> p3)->bool {
     const double* mom = p->getMomentum();
-    if (not mom) return false;
+    if (not mom) {
+        p3[0] = nan("");
+        p3[1] = nan("");
+        p3[2] = nan("");
+        return false;
+    }
     p3[0] = mom[0];
     p3[1] = mom[1];
     p3[2] = mom[2];
@@ -83,7 +98,12 @@ lciowrap.method("_getMomentum", [](const EVENT::MCParticle* p) {
 // returns a bool to indicate whether this was a nullptr
 lciowrap.method("getMomentumAtEndpoint3", [](const EVENT::MCParticle* p, ArrayRef<double> p3)->bool {
     const double* mom = p->getMomentumAtEndpoint();
-    if (not mom) return false;
+    if (not mom) {
+        p3[0] = nan("");
+        p3[1] = nan("");
+        p3[2] = nan("");
+        return false;
+    }
     p3[0] = mom[0];
     p3[1] = mom[1];
     p3[2] = mom[2];
