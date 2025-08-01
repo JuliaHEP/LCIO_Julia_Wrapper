@@ -47,6 +47,7 @@ include_directories(${INTERFACE_INCLUDE_DIRECTORIES})
 include_directories(${LCIO_INCLUDE_DIRS})
 
 add_library(lciowrap SHARED src/lciowrap.cc )
+target_link_libraries(${LIBRARY_NAME} PRIVATE JlCxx::cxxwrap_julia JlCxx::cxxwrap_julia_stl)
 target_link_libraries(lciowrap ${LCIO_LCIO_LIBRARY} ${LCIO_SIO_LIBRARY} JlCxx::cxxwrap_julia JlCxx::cxxwrap_julia_stl)
 
 install(TARGETS
