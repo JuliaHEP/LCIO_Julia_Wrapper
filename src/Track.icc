@@ -38,8 +38,6 @@ lciowrap.add_type<EVENT::TrackState>("TrackState")
     .method("getTanLambda", &EVENT::TrackState::getTanLambda)
     .method("getCovMatrix", &EVENT::TrackState::getCovMatrix);
 
-jlcxx::stl::apply_stl<EVENT::TrackState*>(lciowrap);
-
 lciowrap.method("getReferencePoint3", [](const EVENT::TrackState* t, ArrayRef<double> x)->bool {
     const float* p3 = t->getReferencePoint();
     if (not p3) {
@@ -78,8 +76,6 @@ lciowrap.add_type<EVENT::Track>("Track", jlcxx::julia_base_type<LCObject>())
     .method("getClosestTrackState", &EVENT::Track::getClosestTrackState)
     .method("getTrackState", &EVENT::Track::getTrackState)
     .method("getTrackerHits", &EVENT::Track::getTrackerHits);
-
-jlcxx::stl::apply_stl<EVENT::Track*>(lciowrap);
 
 lciowrap.method("getReferencePoint3", [](const EVENT::Track* t, ArrayRef<double> x)->bool {
     const float* p3 = t->getReferencePoint();

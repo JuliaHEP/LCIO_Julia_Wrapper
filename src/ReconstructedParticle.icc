@@ -56,8 +56,6 @@ lciowrap.method("_getReferencePoint", [](const EVENT::ReconstructedParticle* p) 
     return make_tuple(x[0], x[1], x[2]);
 });
 
-jlcxx::stl::apply_stl<EVENT::ReconstructedParticle*>(lciowrap);
-
 lciowrap.method("getParticles", [](const EVENT::ReconstructedParticle* p)->const std::vector<EVENT::ReconstructedParticle*>& {
     return p->getParticles();
 });

@@ -70,6 +70,3 @@ lciowrap.method("_getPosition", [](const EVENT::CalorimeterHit* hit) {
 lciowrap.method("getRawHit", [](const EVENT::CalorimeterHit* hit)->RawCalorimeterHit* {
     return static_cast<RawCalorimeterHit*>(hit->getRawHit());
 });
-
-
-jlcxx::stl::apply_stl<EVENT::CalorimeterHit*>(lciowrap);

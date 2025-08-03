@@ -96,8 +96,6 @@ namespace jlcxx
 JLCXX_MODULE define_julia_module(jlcxx::Module& lciowrap)
 {
     lciowrap.add_type<LCObject>("LCObject");
-    jlcxx::stl::apply_stl<LCObject*>(lciowrap);
-
     lciowrap.add_type<LCParameters>("LCParameters")
         .method("getIntVal", &LCParameters::getIntVal)
         .method("getFloatVal", &LCParameters::getFloatVal)
@@ -150,8 +148,6 @@ JLCXX_MODULE define_julia_module(jlcxx::Module& lciowrap)
         .method("getLikelihood", &ParticleID::getLikelihood)
         .method("getAlgorithmType", &ParticleID::getAlgorithmType)
         .method("getParameters", &ParticleID::getParameters);
-
-    jlcxx::stl::apply_stl<ParticleID*>(lciowrap);
 
     lciowrap.add_type<LCEvent>("LCEvent")
         .method("getEventCollection", &LCEvent::getCollection)

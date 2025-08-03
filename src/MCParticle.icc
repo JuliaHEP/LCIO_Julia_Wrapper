@@ -17,8 +17,6 @@ lciowrap.add_type<EVENT::MCParticle>("MCParticle", jlcxx::julia_base_type<LCObje
     .method("getMass", &EVENT::MCParticle::getMass)
     .method("getCharge", &EVENT::MCParticle::getCharge);
 
-jlcxx::stl::apply_stl<EVENT::MCParticle*>(lciowrap);
-
 // These methods have to be declared separately from the type MCParticle, so that CxxWrap
 // can generate the type and generate the templates specializations for the std::vector,
 // which are returned by the methods here

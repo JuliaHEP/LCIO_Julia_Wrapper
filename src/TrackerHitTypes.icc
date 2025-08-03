@@ -12,8 +12,6 @@ lciowrap.add_type<EVENT::SimTrackerHit>("SimTrackerHit")
     .method("isOverlay", &EVENT::SimTrackerHit::isOverlay)
     .method("isProducedBySecondary", &EVENT::SimTrackerHit::isProducedBySecondary);
 
-jlcxx::stl::apply_stl<EVENT::SimTrackerHit*>(lciowrap);
-
 // returns a bool to indicate whether this was a nullptr
 lciowrap.method("getPosition3", [](const EVENT::SimTrackerHit* hit, ArrayRef<double> x)->bool {
     const double* p = hit->getPosition();
@@ -90,8 +88,6 @@ lciowrap.method("_getPosition", [](const EVENT::TrackerHit* hit) {
     }
     return make_tuple(p[0], p[1], p[2]);
 });
-
-jlcxx::stl::apply_stl<EVENT::TrackerHit*>(lciowrap);
 
 lciowrap.add_type<EVENT::TrackerData>("TrackerData")
     .method("getCellID0", &EVENT::TrackerData::getCellID0)

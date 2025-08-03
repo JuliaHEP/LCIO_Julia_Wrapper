@@ -14,9 +14,6 @@ lciowrap.add_type<EVENT::Cluster>("Cluster", jlcxx::julia_base_type<LCObject>())
     .method("getHitContributions", &EVENT::Cluster::getHitContributions)
     .method("getSubdetectorEnergies", &EVENT::Cluster::getSubdetectorEnergies);
 
-// first, generate the template specialization
-jlcxx::stl::apply_stl<EVENT::Cluster*>(lciowrap);
-
 // then we can add methods that use std:: collections
 lciowrap.method("getClusters", [](const EVENT::Cluster* c)->const std::vector<Cluster*>& {
     return c->getClusters();
